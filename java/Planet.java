@@ -1,34 +1,34 @@
-public class Planet  {
+public class Planet extends SolarObject implements Moves {
+    public static SolarSystem window = new SolarSystem(1920,1080);
+    private double orbitVelocity;
 
-    public static double plDiameter;
-    public static double plVelocity;
-    public static String plColour;
-    public static double plDistance;
-    public static double plCentreOfRotationDistance;
-    public static double plCentreOfRotationAngle;
-    SolarSystem window = new SolarSystem(1920,1080);
+    /**
+     * Constructor.
+     * @param dis The distance of the Planet from the centre of the Universe.
+     * @param a The orbital angle of the Planet.
+     * @param diam The diameter of the Planet.
+     * @param c The color of the Planet.
+     * @param vel The orbital velocity of the Planet.
+     */
 
-    public Planet(double plDiameter, double plVelocity, double plDistance, String plColour, double plCentreOfRotationDistance, double plCentreOfRotationAngle,SolarSystem window) {
-        this.plDiameter = plDiameter;
-        this.plVelocity = plVelocity;
-        this.plDistance = plDistance;
-        this.plCentreOfRotationDistance = plCentreOfRotationDistance;
-        this.plCentreOfRotationDistance = plCentreOfRotationDistance;
-        this.window = window;
+
+    public Planet(double dis, double a, double diam, String c, double vel,SolarSystem window)
+    {
+        super(dis,a,diam,c);
+        orbitVelocity = vel;
     }
 
-    public static void draw(SolarSystem window,double plDiameter, double plVelocity, double plDistance, String plColour, double plCentreOfRotationDistance, double plCentreOfRotationAngle){
+    public void updatePlanets(){
+        window.drawSolarObject(0,0,100,"#FFCA18");
+        window.drawSolarObjectAbout(getDistance(),orbitVelocity,getDiameter(),getColour(),getDistance(),getAngle());
+    }
 
-        int x = 0;
-        while(true) {
-            if (x == 0) {
-                window.drawSolarObject(0, 0, 100, "ORANGE");
-                window.drawSolarObjectAbout(plDistance,plVelocity,plDiameter,plColour, plCentreOfRotationDistance, plCentreOfRotationAngle);
-                window.finishedDrawing();
-                x++;
-            }
-            x = 0;
-            plVelocity = plVelocity + 1;
+    public void move()
+    {
+        this.setAngle(this.getAngle() + orbitVelocity);
+        if(this.getAngle() > 360)
+        {
+            this.setAngle(0);
         }
     }
 }
